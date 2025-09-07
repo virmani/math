@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice for 3rd Grade</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌟 Math Practice Fun! 🌟</h1>
+            <p class="subtitle">One problem at a time!</p>
+        </header>
+
+        <!-- Main Menu -->
+        <div class="main-menu" id="mainMenu">
+            <div class="section-card" data-section="addition">
+                <h2>➕ Addition</h2>
+                <p>Let's add numbers together!</p>
+            </div>
+            <div class="section-card" data-section="subtraction">
+                <h2>➖ Subtraction</h2>
+                <p>Let's take numbers away!</p>
+            </div>
+            <div class="section-card" data-section="estimation">
+                <h2>🎯 Estimation</h2>
+                <p>Let's make smart guesses!</p>
+            </div>
+        </div>
+
+        <!-- Addition Subsections -->
+        <div class="subsection-menu hidden" id="additionMenu">
+            <button class="back-btn" onclick="showMainMenu()">← Back</button>
+            <h2>Addition Practice</h2>
+            <div class="subsection-grid">
+                <div class="subsection-card" data-type="mental-addition">
+                    <h3>Mental Addition</h3>
+                    <p>Add small numbers in your head!</p>
+                </div>
+                <div class="subsection-card" data-type="2-digit-addition">
+                    <h3>2-Digit Addition</h3>
+                    <p>Add two 2-digit numbers!</p>
+                </div>
+                <div class="subsection-card" data-type="3-digit-addition">
+                    <h3>3-Digit Addition</h3>
+                    <p>Add two 3-digit numbers!</p>
+                </div>
+                <div class="subsection-card" data-type="4-digit-addition">
+                    <h3>4-Digit Addition</h3>
+                    <p>Add two 4-digit numbers!</p>
+                </div>
+                <div class="subsection-card" data-type="missing-addend">
+                    <h3>Missing Number</h3>
+                    <p>Find the missing addend!</p>
+                </div>
+                <div class="subsection-card" data-type="word-problems-add">
+                    <h3>Word Problems</h3>
+                    <p>Story problems with addition!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subtraction Subsections -->
+        <div class="subsection-menu hidden" id="subtractionMenu">
+            <button class="back-btn" onclick="showMainMenu()">← Back</button>
+            <h2>Subtraction Practice</h2>
+            <div class="subsection-grid">
+                <div class="subsection-card" data-type="mental-subtraction">
+                    <h3>Mental Subtraction</h3>
+                    <p>Subtract small numbers in your head!</p>
+                </div>
+                <div class="subsection-card" data-type="2-digit-subtraction">
+                    <h3>2-Digit Subtraction</h3>
+                    <p>Subtract two 2-digit numbers!</p>
+                </div>
+                <div class="subsection-card" data-type="3-digit-subtraction">
+                    <h3>3-Digit Subtraction</h3>
+                    <p>Subtract two 3-digit numbers!</p>
+                </div>
+                <div class="subsection-card" data-type="4-digit-subtraction">
+                    <h3>4-Digit Subtraction</h3>
+                    <p>Subtract two 4-digit numbers!</p>
+                </div>
+                <div class="subsection-card" data-type="missing-minuend">
+                    <h3>Missing Number</h3>
+                    <p>Find the missing number!</p>
+                </div>
+                <div class="subsection-card" data-type="word-problems-sub">
+                    <h3>Word Problems</h3>
+                    <p>Story problems with subtraction!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estimation Subsections -->
+        <div class="subsection-menu hidden" id="estimationMenu">
+            <button class="back-btn" onclick="showMainMenu()">← Back</button>
+            <h2>Estimation Practice</h2>
+            <div class="subsection-grid">
+                <div class="subsection-card" data-type="visual-estimation">
+                    <h3>Count & Estimate</h3>
+                    <p>Guess how many items you see!</p>
+                </div>
+                <div class="subsection-card" data-type="rounding-addition">
+                    <h3>Round & Add</h3>
+                    <p>Round numbers then add!</p>
+                </div>
+                <div class="subsection-card" data-type="rounding-subtraction">
+                    <h3>Round & Subtract</h3>
+                    <p>Round numbers then subtract!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Problem Display -->
+        <div class="problem-container hidden" id="problemContainer">
+            <button class="back-btn" onclick="showSubsectionMenu()">← Back</button>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="problem-counter">
+                <span id="currentProblem">1</span> of <span id="totalProblems">10</span>
+            </div>
+            
+            <div class="problem-display" id="problemDisplay">
+                <div class="problem-text" id="problemText">5 + 3 = ?</div>
+                <div class="visual-estimation hidden" id="visualEstimation">
+                    <div class="estimation-instruction" id="estimationInstruction">How many dots do you see?</div>
+                    <div class="dots-container" id="dotsContainer"></div>
+                </div>
+            </div>
+
+            <div class="answer-input-container">
+                <input type="number" id="answerInput" placeholder="Your answer" class="answer-input">
+                <button class="submit-btn" id="submitBtn" onclick="checkAnswer()">Check Answer</button>
+            </div>
+
+            <!-- Rounding Problem Input Container -->
+            <div class="rounding-input-container hidden" id="roundingInputContainer">
+                <div class="rounding-step">
+                    <label class="rounding-label" id="roundingLabel1">Round 456 to the nearest 100:</label>
+                    <input type="number" id="roundedInput1" placeholder="?" class="rounding-input">
+                </div>
+                <div class="rounding-step">
+                    <label class="rounding-label" id="roundingLabel2">Round 321 to the nearest 100:</label>
+                    <input type="number" id="roundedInput2" placeholder="?" class="rounding-input">
+                </div>
+                <div class="rounding-step">
+                    <label class="rounding-label" id="roundingLabel3">Now calculate: 500 + 300 =</label>
+                    <input type="number" id="finalAnswerInput" placeholder="?" class="rounding-input">
+                </div>
+                <button class="submit-btn" id="submitRoundingBtn" onclick="checkRoundingAnswer()">Check Answers</button>
+            </div>
+
+            <div class="feedback hidden" id="feedback">
+                <div class="feedback-message" id="feedbackMessage"></div>
+                <button class="next-btn hidden" id="nextBtn" onclick="nextProblem()">Next Problem!</button>
+                <button class="finish-btn hidden" id="finishBtn" onclick="finishSession()">Great Job! 🎉</button>
+            </div>
+        </div>
+
+        <!-- Celebration Overlay -->
+        <div class="celebration-overlay hidden" id="celebrationOverlay">
+            <div class="celebration-content">
+                <div class="celebration-text">🎉 Excellent! 🎉</div>
+                <div class="stars">
+                    <span class="star">⭐</span>
+                    <span class="star">⭐</span>
+                    <span class="star">⭐</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

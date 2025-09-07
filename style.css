@@ -1,0 +1,457 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Main Menu Styles */
+.main-menu {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.section-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    min-width: 250px;
+}
+
+.section-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+.section-card h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #5a67d8;
+}
+
+.section-card p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Subsection Menu Styles */
+.subsection-menu {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.subsection-menu h2 {
+    text-align: center;
+    color: #5a67d8;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+.subsection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.subsection-card {
+    background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.subsection-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.subsection-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #2d3748;
+}
+
+.subsection-card p {
+    color: #4a5568;
+}
+
+/* Problem Container Styles */
+.problem-container {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+.progress-bar {
+    background: #e2e8f0;
+    border-radius: 10px;
+    height: 10px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #48bb78, #38a169);
+    height: 100%;
+    width: 0%;
+    transition: width 0.5s ease;
+    border-radius: 10px;
+}
+
+.problem-counter {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.problem-display {
+    margin: 40px 0;
+    padding: 40px;
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    border-radius: 20px;
+}
+
+.problem-text {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #2d3748;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.answer-input-container {
+    margin: 30px 0;
+}
+
+/* Rounding Problem Input Styles */
+.rounding-input-container {
+    margin: 30px 0;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-radius: 15px;
+    padding: 25px;
+    border: 2px solid #0ea5e9;
+}
+
+.rounding-step {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.rounding-step:last-of-type {
+    margin-bottom: 25px;
+}
+
+.rounding-label {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #0c4a6e;
+    flex: 1;
+    text-align: left;
+}
+
+.rounding-input {
+    font-size: 1.5rem;
+    padding: 10px 15px;
+    border: 2px solid #7dd3fc;
+    border-radius: 10px;
+    text-align: center;
+    width: 100px;
+    font-family: inherit;
+    background: white;
+}
+
+.rounding-input:focus {
+    outline: none;
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.answer-input {
+    font-size: 2rem;
+    padding: 15px;
+    border: 3px solid #cbd5e0;
+    border-radius: 15px;
+    text-align: center;
+    margin-right: 15px;
+    max-width: 150px;
+    font-family: inherit;
+}
+
+.answer-input:focus {
+    outline: none;
+    border-color: #5a67d8;
+    box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.1);
+}
+
+.submit-btn, .next-btn, .finish-btn, .back-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    font-weight: bold;
+}
+
+.submit-btn:hover, .next-btn:hover, .finish-btn:hover, .back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.back-btn {
+    background: #718096;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+}
+
+.feedback {
+    margin-top: 30px;
+}
+
+.feedback-message {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    font-weight: bold;
+}
+
+.feedback.correct .feedback-message {
+    background: linear-gradient(135deg, #68d391 0%, #48bb78 100%);
+    color: white;
+}
+
+.feedback.incorrect .feedback-message {
+    background: linear-gradient(135deg, #feb2b2 0%, #f56565 100%);
+    color: white;
+}
+
+/* Celebration Overlay */
+.celebration-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.celebration-content {
+    background: white;
+    border-radius: 30px;
+    padding: 60px;
+    text-align: center;
+    animation: celebrationPop 0.6s ease-out;
+}
+
+.celebration-text {
+    font-size: 3rem;
+    color: #5a67d8;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.stars {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.star {
+    font-size: 3rem;
+    animation: starTwinkle 1s ease-in-out infinite alternate;
+}
+
+.star:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.star:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Animations */
+@keyframes celebrationPop {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes starTwinkle {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1.2) rotate(10deg);
+        opacity: 1;
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+.shake .problem-display {
+    background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
+}
+
+.shake .answer-input {
+    border-color: #f56565;
+    background: #fed7d7;
+}
+
+/* Visual Estimation Styles */
+.visual-estimation {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.estimation-instruction {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1565c0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.dots-container {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    min-height: 200px;
+    border: 2px solid #90caf9;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .section-card {
+        min-width: 200px;
+        padding: 30px;
+    }
+    
+    .problem-text {
+        font-size: 2.5rem;
+    }
+    
+    .answer-input {
+        font-size: 1.5rem;
+        max-width: 120px;
+    }
+    
+    .celebration-content {
+        padding: 40px;
+        margin: 20px;
+    }
+    
+    .celebration-text {
+        font-size: 2rem;
+    }
+    
+    .estimation-instruction {
+        font-size: 1.2rem;
+    }
+    
+    .dots-container {
+        min-height: 150px;
+        padding: 10px;
+    }
+    
+    .rounding-step {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .rounding-label {
+        font-size: 1.1rem;
+    }
+    
+    .rounding-input {
+        width: 80px;
+        font-size: 1.3rem;
+        align-self: center;
+    }
+}

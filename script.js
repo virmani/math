@@ -40,6 +40,15 @@ class MathPracticeApp {
             }
         });
 
+        // Enter key for rounding inputs
+        ['roundedInput1', 'roundedInput2', 'finalAnswerInput'].forEach(inputId => {
+            document.getElementById(inputId).addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    this.checkRoundingAnswer();
+                }
+            });
+        });
+
         // Auto-focus on answer input when it becomes visible
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
@@ -373,40 +382,52 @@ class MathPracticeApp {
             
         } else if (problem.isRoundingProblem) {
             // Handle rounding problems
-            problemText.style.fontSize = '1.8rem';
+            problemText.style.fontSize = '2rem';
             problemText.style.textAlign = 'center';
-            problemText.style.lineHeight = '1.4';
+            problemText.style.lineHeight = '1.2';
             
             const { original1, original2, operation } = problem.roundingData;
             const operatorSymbol = operation === 'addition' ? '+' : '−';
             
-            problemText.innerHTML = `
-                <div style="margin-bottom: 15px; font-size: 2rem; color: #2d3748;">
-                    ${original1} ${operatorSymbol} ${original2} = ?
-                </div>
-                <div style="font-size: 1.3rem; color: #666; line-height: 1.6;">
-                    <strong>Step 1:</strong> Round each number to the nearest 100<br>
-                    <strong>Step 2:</strong> Add/subtract the rounded numbers<br>
-                    <em>What is your estimated answer?</em>
-                </div>
-            `;
+            problemText.textContent = `Estimate: ${original1} ${operatorSymbol} ${original2}`;
+            
+            // Show rounding input container and hide regular input
+            document.getElementById('answerInput').parentElement.classList.add('hidden');
+            const roundingContainer = document.getElementById('roundingInputContainer');
+            roundingContainer.classList.remove('hidden');
+            
+            // Update the labels with current numbers
+            document.getElementById('roundingLabel1').textContent = `Round ${original1} to the nearest 100:`;
+            document.getElementById('roundingLabel2').textContent = `Round ${original2} to the nearest 100:`;
+            document.getElementById('roundingLabel3').textContent = `Now calculate: ___ ${operatorSymbol} ___ =`;
             
         } else if (problem.isWordProblem) {
             problemText.style.fontSize = '1.5rem';
             problemText.style.textAlign = 'left';
             problemText.style.lineHeight = '1.6';
             problemText.textContent = problem.problem;
+            
+            // Show regular input, hide rounding input
+            document.getElementById('answerInput').parentElement.classList.remove('hidden');
+            document.getElementById('roundingInputContainer').classList.add('hidden');
         } else {
             problemText.style.fontSize = '3rem';
             problemText.style.textAlign = 'center';
             problemText.style.lineHeight = '1';
             problemText.textContent = problem.problem;
+            
+            // Show regular input, hide rounding input
+            document.getElementById('answerInput').parentElement.classList.remove('hidden');
+            document.getElementById('roundingInputContainer').classList.add('hidden');
         }
         
         this.currentAnswer = problem.answer;
         
-        // Reset input and feedback
+        // Reset all inputs and feedback
         document.getElementById('answerInput').value = '';
+        document.getElementById('roundedInput1').value = '';
+        document.getElementById('roundedInput2').value = '';
+        document.getElementById('finalAnswerInput').value = '';
         document.getElementById('feedback').classList.add('hidden');
         document.getElementById('nextBtn').classList.add('hidden');
         document.getElementById('finishBtn').classList.add('hidden');
@@ -560,6 +581,44 @@ class MathPracticeApp {
         alert(message);
         this.showSubsectionMenu(this.currentSection);
     }
+
+    checkRoundingAnswer() {
+        const problem = this.problems[this.currentProblemIndex];
+        const { rounded1, rounded2 } = problem.roundingData;
+        
+        const userRounded1 = parseInt(document.getElementById('roundedInput1').value);
+        const userRounded2 = parseInt(document.getElementById('roundedInput2').value);
+        const userFinalAnswer = parseInt(document.getElementById('finalAnswerInput').value);
+        
+        // Check if all inputs are filled
+        if (isNaN(userRounded1) || isNaN(userRounded2) || isNaN(userFinalAnswer)) {
+            this.showIncorrectFeedback('Please fill in all three blanks!');
+            return;
+        }
+        
+        // Check each step
+        const step1Correct = userRounded1 === rounded1;
+        const step2Correct = userRounded2 === rounded2;
+        const step3Correct = userFinalAnswer === this.currentAnswer;
+        
+        if (step1Correct && step2Correct && step3Correct) {
+            this.correctAnswers++;
+            this.showCorrectFeedback();
+        } else {
+            // Provide specific feedback on what's wrong
+            let errorMsg = 'Let\'s check your work:\n';
+            if (!step1Correct) {
+                errorMsg += `• ${problem.roundingData.original1} rounds to ${rounded1}, not ${userRounded1}\n`;
+            }
+            if (!step2Correct) {
+                errorMsg += `• ${problem.roundingData.original2} rounds to ${rounded2}, not ${userRounded2}\n`;
+            }
+            if (!step3Correct) {
+                errorMsg += `• ${rounded1} ${problem.roundingData.operation === 'addition' ? '+' : '−'} ${rounded2} = ${this.currentAnswer}, not ${userFinalAnswer}\n`;
+            }
+            this.showIncorrectFeedback(errorMsg);
+        }
+    }
 }
 
 // Global functions for HTML onclick events
@@ -581,6 +640,10 @@ function nextProblem() {
 
 function finishSession() {
     app.finishSession();
+}
+
+function checkRoundingAnswer() {
+    app.checkRoundingAnswer();
 }
 
 // Initialize the app when page loads

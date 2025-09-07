@@ -484,17 +484,34 @@ class MathPracticeApp {
         const userAnswer = parseInt(document.getElementById('answerInput').value);
         const feedback = document.getElementById('feedback');
         const feedbackMessage = document.getElementById('feedbackMessage');
+        const currentProblem = this.problems[this.currentProblemIndex];
         
         if (isNaN(userAnswer)) {
             this.showIncorrectFeedback('Please enter a number!');
             return;
         }
         
-        if (userAnswer === this.currentAnswer) {
-            this.correctAnswers++;
-            this.showCorrectFeedback();
+        // Special handling for visual estimation problems
+        if (currentProblem.isVisualEstimation) {
+            const actualCount = this.currentAnswer;
+            const errorMargin = Math.round(actualCount * 0.2); // 20% error margin
+            const minAcceptable = actualCount - errorMargin;
+            const maxAcceptable = actualCount + errorMargin;
+            
+            if (userAnswer >= minAcceptable && userAnswer <= maxAcceptable) {
+                this.correctAnswers++;
+                this.showEstimationCorrectFeedback(userAnswer, actualCount);
+            } else {
+                this.showIncorrectFeedback(`Good try! The actual count is ${actualCount}. Your estimate of ${userAnswer} was a bit off. Try to get within ${errorMargin} of the actual count.`);
+            }
         } else {
-            this.showIncorrectFeedback(`Not quite! Try again. The answer is ${this.currentAnswer}.`);
+            // Regular exact answer checking for non-estimation problems
+            if (userAnswer === this.currentAnswer) {
+                this.correctAnswers++;
+                this.showCorrectFeedback();
+            } else {
+                this.showIncorrectFeedback(`Not quite! Try again. The answer is ${this.currentAnswer}.`);
+            }
         }
     }
 
@@ -515,6 +532,43 @@ class MathPracticeApp {
         ];
         
         feedbackMessage.textContent = encouragements[Math.floor(Math.random() * encouragements.length)];
+        
+        // Show celebration overlay
+        this.showCelebration();
+        
+        // Show next/finish button after celebration
+        setTimeout(() => {
+            if (this.currentProblemIndex < this.totalProblems - 1) {
+                document.getElementById('nextBtn').classList.remove('hidden');
+            } else {
+                document.getElementById('finishBtn').classList.remove('hidden');
+            }
+        }, 1500);
+    }
+
+    showEstimationCorrectFeedback(userEstimate, actualCount) {
+        const feedback = document.getElementById('feedback');
+        const feedbackMessage = document.getElementById('feedbackMessage');
+        
+        feedback.classList.remove('hidden', 'incorrect');
+        feedback.classList.add('correct');
+        
+        const encouragements = [
+            '🎯 Great estimation!',
+            '⭐ Excellent guess!', 
+            '🌟 Nice estimate!',
+            '🎊 Well done!',
+            '👏 Good eye!',
+            '💫 Fantastic!'
+        ];
+        
+        const baseMessage = encouragements[Math.floor(Math.random() * encouragements.length)];
+        
+        if (userEstimate === actualCount) {
+            feedbackMessage.textContent = `${baseMessage} You got it exactly right! There are ${actualCount} items.`;
+        } else {
+            feedbackMessage.textContent = `${baseMessage} You estimated ${userEstimate} and there are actually ${actualCount} items. That's a great estimate!`;
+        }
         
         // Show celebration overlay
         this.showCelebration();
